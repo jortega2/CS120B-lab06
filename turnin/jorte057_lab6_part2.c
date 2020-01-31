@@ -10,7 +10,7 @@ volatile unsigned char TimerFlag = 0; // TimerISR() sets this to 1. C programmer
 unsigned long _avr_timer_M = 1; // Start count from here, down to 0. Default 1 ms. 
 unsigned long _avr_timer_cntcurr = 0; // Current internal count of 1ms ticks 
 unsigned int i = 0;
-enum states {init, on1, on2, on3, press, wait} state; 
+enum states {init, on1, on2, on3, press, wait, wait2} state; 
 
 void TimerOn(){
 // AVR timer/counter controller register TCCR1
@@ -91,14 +91,21 @@ void TickSM(){
                                 state = wait;
                         }
                         break;
-			break;
+			
 		case wait:
-			if ((~PINA & 0x01) == 0x00){
-				state = wait;
+			if ((~PINA & 0x01) == 0x01){
+				state = wait2;
 			} else { 
-				state = init;
+				state = wait;
 			}
 			break;
+		case wait2:
+			if ((~PINA & 0x01) == 0x01){
+                                state = wait2;
+                        } else {
+                                state = init;
+                        }
+                        break;
 		default:
 			break;
 	} //transitions
@@ -117,6 +124,8 @@ void TickSM(){
 		case press:
 			break;
 		case wait:
+			break;
+		case wait2:
 			break;
 		default:
 			break;
