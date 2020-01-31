@@ -48,35 +48,46 @@ void TimerISR(){
 void TickSM(){
 	switch (state) {
 		case init:
+			i = 0;
 			state = on1;
 			break;
 		case on1:
+			i++;
 			if ((~PINA & 0x01) == 0x01){
+				i = 0;
 				state = press;
-			} else {
+			} else if (i > 10) {
+				i = 0;
 				state = on2;
 			}
 			break;
 		case on2:
-			if( (~PINA & 0x01) == 0x01){
+			i++;
+			if ((~PINA & 0x01) == 0x01){
+				i = 0;
                                 state = press;
-                        } else {
+                        } else if (i > 10) {
+				i = 0;
 				state = on3;
 			}
 			break;
 		case on3:
-			if((~PINA & 0x01) == 0x01){
+			i++;
+			if ((~PINA & 0x01) == 0x01){
+				i = 0;
                                 state = press;
-                        } else {
+                        } else if ( i > 10) {
+				i = 0;
 				state = on1;
 			}
 			break;
 		case press:
 			if ((~PINA & 0x01) == 0x01){
-				state = press;
-			} else {
-				state = wait;
-			}
+                                state = press;
+                        } else {
+                                state = wait;
+                        }
+                        break;
 			break;
 		case wait:
 			if ((~PINA & 0x01) == 0x00){
@@ -129,7 +140,7 @@ int main(){
 	DDRB = 0xFF; // Set port B to output
 	PORTB = 0x00; // Init port B to 0s
 	DDRA = 0x00; PORTA = 0xFF;
-	TimerSet(300);
+	TimerSet(3);
 	TimerOn();
 	state = init;
 	//unsigned char tmpB = 0x00;
