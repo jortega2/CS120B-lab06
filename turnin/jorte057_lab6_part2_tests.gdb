@@ -57,7 +57,7 @@ expectPORTB 2
 expect state wait
 checkResult
 
-#light behavior, button press on state 2 (light B1)
+#light behavior, button press on state 2 (light B1) then reset game and continue 
 test "Test 2 but press button and reset game: ...wait 60 ticks PINA 0x01 init on1 => PORB = 1"
 setPINA ~0x00
 set state = init

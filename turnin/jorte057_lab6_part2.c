@@ -1,3 +1,12 @@
+/*  Juvenal Ortega jorte057 
+ *  Partner(s) Name & E-mail: Duke Pham dpham073@ucr.edu
+ * Lab Section: 022
+ * Assignment: Lab 6  Exercise 2
+ * Exercise Description: [optional - include for your own benefit]
+ *
+ * I acknowledge all content contained herein, excluding template 
+ * or example code, is my own original work.
+ */
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #ifdef _SIMULATE_
